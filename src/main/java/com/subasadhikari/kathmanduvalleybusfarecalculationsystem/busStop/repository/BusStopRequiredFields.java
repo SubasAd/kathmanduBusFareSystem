@@ -8,5 +8,5 @@ import java.util.List;
 public interface BusStopRequiredFields {
     public BusStop findBusStopsByLatitudeEqualsAndLongitute(Double latitude, Double longitute);
     public BusStop findByName(String Name);
-    public List<BusStop> findBusStopsByBusRoute(List<BusRoute> busroutes);
+
 }
