@@ -10,6 +10,7 @@ public class BusRoute {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
     public void setId(Long id) {
         this.id = id;
     }
@@ -21,6 +22,14 @@ public class BusRoute {
 
     public HashSet<BusStop> getBusStopSet() {
         return busStopSet;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setBusStopSet(HashSet<BusStop> busStopSet) {

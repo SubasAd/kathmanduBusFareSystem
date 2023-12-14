@@ -1,11 +1,12 @@
 package com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.repository;
 
+import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity.BusRoute;
 import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity.BusStop;
 
 import java.util.List;
 
 public interface BusRouteRequiredFields {
 
-    public List<BusStop> findBusRouteByBusStopSet();
 
+    public BusRoute findByName(String name);
 }

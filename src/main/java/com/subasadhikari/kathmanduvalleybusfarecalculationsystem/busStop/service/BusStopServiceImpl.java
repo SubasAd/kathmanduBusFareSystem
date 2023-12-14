@@ -2,6 +2,7 @@ package com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.servic
 
 import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.FareCalculation.Utils;
 import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.Exceptions.NoBusStopFoundException;
+import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity.BusRoute;
 import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity.BusStop;
 import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.repository.BusStopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,7 @@ public class BusStopServiceImpl implements BusStopService{
     public BusStop findByName(String name) {
         return this.busStopRepository.findByName(name);
     }
+
 
     @Override
     public BusStop createNewBusStop(BusStop busStop) {
