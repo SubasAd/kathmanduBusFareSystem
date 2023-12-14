@@ -19,4 +19,11 @@ public class BusRoute {
     @ManyToMany(fetch = FetchType.LAZY , cascade ={ CascadeType.PERSIST ,CascadeType.MERGE})
     private HashSet<BusStop> busStopSet  = new HashSet<>();
 
+    public HashSet<BusStop> getBusStopSet() {
+        return busStopSet;
+    }
+
+    public void setBusStopSet(HashSet<BusStop> busStopSet) {
+        this.busStopSet = busStopSet;
+    }
 }
