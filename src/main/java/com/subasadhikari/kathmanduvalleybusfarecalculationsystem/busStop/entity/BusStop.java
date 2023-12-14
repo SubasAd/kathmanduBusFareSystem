@@ -1,38 +1,54 @@
 package com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
+
+@Builder
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class BusStop {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Double Longitute;
-    private Double Latitude;
+    private Double longitute;
+    private Double latitude;
     private  String name;
+    @ManyToMany
+    private Set<BusRoute> busRouteSet = new HashSet<>();
 
     public void setLongitute(Double longitute) {
-        Longitute = longitute;
+        longitute = longitute;
     }
 
     public void setLatitude(Double latitude) {
-        Latitude = latitude;
+        latitude = latitude;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public Set<BusRoute> getBusRouteSet() {
+        return busRouteSet;
+    }
+
+    public void setBusRouteSet(Set<BusRoute> busRouteSet) {
+        this.busRouteSet = busRouteSet;
+    }
+
     public Double getLongitute() {
-        return Longitute;
+        return longitute;
     }
 
     public Double getLatitude() {
-        return Latitude;
+        return latitude;
     }
 
     public String getName() {
