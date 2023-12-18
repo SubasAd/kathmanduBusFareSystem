@@ -1,5 +1,6 @@
 package com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,18 +18,19 @@ public class BusStop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Double longitute;
-    private Double latitude;
-    private  String name;
-    @ManyToMany
-    private Set<BusRoute> busRouteSet = new HashSet<>();
 
-    public void setLongitute(Double longitute) {
-        longitute = longitute;
+    private  String name;
+    @ManyToMany(cascade = {CascadeType.ALL,CascadeType.MERGE})
+    private Set<BusRoute> busRouteSet = new HashSet<>();
+    @OneToOne(cascade = CascadeType.ALL)
+    private Location busStopLocation;
+
+    public Location getBusStopLocation() {
+        return busStopLocation;
     }
 
-    public void setLatitude(Double latitude) {
-        latitude = latitude;
+    public void setBusStopLocation(Location busStopLocation) {
+        this.busStopLocation = busStopLocation;
     }
 
     public void setName(String name) {
@@ -41,14 +43,6 @@ public class BusStop {
 
     public void setBusRouteSet(Set<BusRoute> busRouteSet) {
         this.busRouteSet = busRouteSet;
-    }
-
-    public Double getLongitute() {
-        return longitute;
-    }
-
-    public Double getLatitude() {
-        return latitude;
     }
 
     public String getName() {

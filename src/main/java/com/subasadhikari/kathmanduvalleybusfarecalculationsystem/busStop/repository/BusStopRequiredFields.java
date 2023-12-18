@@ -6,7 +6,7 @@ import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity.
 import java.util.List;
 
 public interface BusStopRequiredFields {
-    public BusStop findBusStopsByLatitudeEqualsAndLongitute(Double latitude, Double longitute);
+    public BusStop findBusStopsByLatitudeEqualsAndLongitude(Double latitude, Double longitude);
     public BusStop findByName(String Name);
 
 }

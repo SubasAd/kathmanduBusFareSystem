@@ -1,4 +1,4 @@
-package com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.Exceptions;
+package com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.exceptions;
 
 public class NoBusStopFoundException extends Exception{
     public String message(){

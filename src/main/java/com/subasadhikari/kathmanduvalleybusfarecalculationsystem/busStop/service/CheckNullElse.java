@@ -2,9 +2,11 @@ package com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.servic
 
 import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity.BusRoute;
 import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity.BusStop;
+import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity.Location;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CheckNullElse {
     static String getName(BusStop busStopOriginal, BusStop busStopUpdated)
@@ -12,18 +14,14 @@ public class CheckNullElse {
         return busStopUpdated.getName() != null ? busStopUpdated.getName() : busStopOriginal.getName();
     }
 
-    public static Double getLatitude(BusStop busStopOriginal, BusStop busStopUpdated) {
-        return busStopUpdated.getLatitude() != null ? busStopUpdated.getLatitude() : busStopOriginal.getLatitude();
-    }
-
-    static Double getLongitude(BusStop busStopOriginal, BusStop busStopUpdated) {
-        return busStopUpdated.getLongitute() != null ? busStopUpdated.getLongitute() : busStopOriginal.getLongitute();
-    }
     static String getName(BusRoute busRouteOriginal, BusRoute busRouteUpdated){
         return busRouteUpdated.getName() != null ? busRouteUpdated.getName() : busRouteOriginal.getName();
     }
-    static HashSet<BusStop> getBusStops(BusRoute busRouteOriginal, BusRoute busRouteUpdated){
+    static Set<BusStop> getBusStops(BusRoute busRouteOriginal, BusRoute busRouteUpdated){
        return  busRouteUpdated.getBusStopSet() != null ? busRouteUpdated.getBusStopSet() : busRouteOriginal.getBusStopSet();
     }
 
+    public static Location getBusLocation(BusStop busStopOriginal, BusStop busStopUpdated) {
+        return  busStopUpdated.getBusStopLocation() != null ? busStopUpdated.getBusStopLocation() : busStopOriginal.getBusStopLocation();
+    }
 }

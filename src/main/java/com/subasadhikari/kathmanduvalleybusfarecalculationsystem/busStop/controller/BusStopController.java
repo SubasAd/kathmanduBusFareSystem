@@ -1,7 +1,8 @@
-package com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.Controller;
+package com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.controller;
 
-import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.Exceptions.NoBusStopFoundException;
+import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.exceptions.NoBusStopFoundException;
 import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity.BusStop;
+import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.exceptions.NoRouteFoundException;
 import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.service.BusStopService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ public class BusStopController {
     }
 
     @CrossOrigin
-    @GetMapping("/")
+    @GetMapping("")
     ResponseEntity<List<BusStop>> findAllStop()
     {
         return ResponseEntity.ok(this.busStopService.findAll());
@@ -33,8 +34,8 @@ public class BusStopController {
     }
 
     @CrossOrigin
-    @PostMapping("/")
-    ResponseEntity<BusStop> addNewBusStop(@RequestBody BusStop busStop){
+    @PostMapping("")
+    ResponseEntity<BusStop> addNewBusStop(@RequestBody BusStop busStop) throws NoRouteFoundException {
         return ResponseEntity.ok(this.busStopService.createNewBusStop(busStop));
     }
     @CrossOrigin
@@ -42,6 +43,11 @@ public class BusStopController {
 
     ResponseEntity<BusStop> updateBusStop(@PathVariable Long id, @RequestBody BusStop busStop) throws NoBusStopFoundException {
       return ResponseEntity.ok(this.busStopService.updateBusStop(id,busStop));
+    }
+    @CrossOrigin
+    @GetMapping("/{BusStopId}")
+    ResponseEntity<BusStop> deleteById(@PathVariable Long busStopId) throws NoBusStopFoundException {
+        return ResponseEntity.ok(this.busStopService.deleteById(busStopId));
     }
 
 }

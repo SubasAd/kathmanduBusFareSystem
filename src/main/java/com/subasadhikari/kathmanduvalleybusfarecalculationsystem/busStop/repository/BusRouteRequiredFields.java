@@ -6,7 +6,5 @@ import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity.
 import java.util.List;
 
 public interface BusRouteRequiredFields {
-
-
     public BusRoute findByName(String name);
 }

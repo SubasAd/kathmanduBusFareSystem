@@ -1,11 +1,8 @@
 package com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.service;
 
-import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.Exceptions.NoRouteFoundException;
+import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.exceptions.NoRouteFoundException;
 import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity.BusRoute;
-import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity.BusStop;
 import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.repository.BusRouteRepository;
-import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.repository.BusStopRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
