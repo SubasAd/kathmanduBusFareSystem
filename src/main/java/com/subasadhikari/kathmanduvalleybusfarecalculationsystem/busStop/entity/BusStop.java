@@ -1,10 +1,10 @@
 package com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busRoute.entity.BusRoute;
+import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.location.Embeddable.LocationKey;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,47 +13,19 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class BusStop {
-
+@Getter
+@Setter
+public class BusStop  {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    @NonNull
     private  String name;
-    @ManyToMany(cascade = {CascadeType.ALL,CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.ALL,CascadeType.MERGE},mappedBy = "busStopSet")
+    @JsonIgnore
     private Set<BusRoute> busRouteSet = new HashSet<>();
-    @OneToOne(cascade = CascadeType.ALL)
-    private Location busStopLocation;
 
-    public Location getBusStopLocation() {
-        return busStopLocation;
-    }
+    @NonNull
+    private LocationKey location;
 
-    public void setBusStopLocation(Location busStopLocation) {
-        this.busStopLocation = busStopLocation;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<BusRoute> getBusRouteSet() {
-        return busRouteSet;
-    }
-
-    public void setBusRouteSet(Set<BusRoute> busRouteSet) {
-        this.busRouteSet = busRouteSet;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
 }

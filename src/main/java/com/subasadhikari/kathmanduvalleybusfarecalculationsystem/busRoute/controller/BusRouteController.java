@@ -1,21 +1,21 @@
-package com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.controller;
+package com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busRoute.controller;
 
-import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity.BusRoute;
-import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.exceptions.NoRouteFoundException;
-import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.service.BusRouteService;
+import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busRoute.service.BusRouteService;
+import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busRoute.exceptions.NoRouteFoundException;
+import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busRoute.entity.BusRoute;
+import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.exceptions.NoBusStopFoundException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@ControllerAdvice
+@RestController
+
 @RequestMapping("/api")
 public class BusRouteController {
 
-    final BusRouteService busRouteService;
-
+    final private BusRouteService busRouteService;
     public BusRouteController(BusRouteService busRouteService) {
         this.busRouteService = busRouteService;
     }
@@ -26,7 +26,7 @@ public class BusRouteController {
     }
     @CrossOrigin
     @PostMapping("/busroute")
-    ResponseEntity<BusRoute> addBusRoute(@RequestBody BusRoute busRoute) {
+    ResponseEntity<BusRoute> addBusRoute(@RequestBody BusRoute busRoute) throws NoBusStopFoundException {
         return ResponseEntity.ok(this.busRouteService.createNewBusRoute(busRoute));
     }
     @CrossOrigin

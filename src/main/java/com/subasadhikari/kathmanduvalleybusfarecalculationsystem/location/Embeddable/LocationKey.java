@@ -1,19 +1,22 @@
-package com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity;
+package com.subasadhikari.kathmanduvalleybusfarecalculationsystem.location.Embeddable;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
-public class Location {
+@Embeddable
+public class LocationKey implements Serializable {
     private Double longitude;
     private Double latitude;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
+    public LocationKey(Double longitude, Double latitude) {
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
+    public LocationKey() {
+    }
 
     public Double getLongitude() {
         return longitude;
@@ -31,27 +34,20 @@ public class Location {
         this.latitude = latitude;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Location location = (Location) o;
+        LocationKey location = (LocationKey) o;
         return Objects.equals(longitude, location.longitude) && Objects.equals(latitude, location.latitude) ;
     }
 
 
-    public boolean equals(Location o) {
+    public boolean equals(LocationKey o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Location location =  (Location) o;
+        LocationKey location =  (LocationKey) o;
         return Objects.equals(longitude, location.longitude) && Objects.equals(latitude, location.latitude) ;
     }
 }

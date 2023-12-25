@@ -1,8 +1,13 @@
 package com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.exceptions;
 
 public class NoBusStopFoundException extends Exception{
-    public String message(){
 
-        return "Bus Stop not found";
+
+    public NoBusStopFoundException() {
+        super("Bus Stop Not Found");
+    }
+
+    public NoBusStopFoundException(String message) {
+        super(message);
     }
 }

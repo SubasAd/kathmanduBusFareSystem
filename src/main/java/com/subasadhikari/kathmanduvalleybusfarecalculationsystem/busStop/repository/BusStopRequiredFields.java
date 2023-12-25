@@ -1,12 +1,11 @@
 package com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.repository;
 
-import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity.BusRoute;
 import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity.BusStop;
-
-import java.util.List;
+import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.location.Embeddable.LocationKey;
 
 public interface BusStopRequiredFields {
-    public BusStop findBusStopsByLatitudeEqualsAndLongitude(Double latitude, Double longitude);
-    public BusStop findByName(String Name);
+
+    BusStop findByName(String Name);
+    BusStop findBusStopByLocation(LocationKey locationKey);
 
 }

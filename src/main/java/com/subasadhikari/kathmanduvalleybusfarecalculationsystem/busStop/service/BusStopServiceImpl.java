@@ -1,29 +1,27 @@
 package com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.service;
 
-import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.FareCalculation.Utils;
-import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity.BusRoute;
+import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busRoute.entity.BusRoute;
+import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busRoute.repository.BusRouteRepository;
+import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.exceptions.BusStopAlreadyExistsException;
 import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.exceptions.NoBusStopFoundException;
 import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity.BusStop;
-import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.exceptions.NoRouteFoundException;
-import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.repository.BusRouteRepository;
 import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.repository.BusStopRepository;
+import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.location.Embeddable.LocationKey;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
+@RequiredArgsConstructor
 @Service
 public class BusStopServiceImpl implements BusStopService{
-
+@NonNull
     final
-    BusStopRepository busStopRepository;
-    BusRouteRepository busRouteRepository;
+    private BusStopRepository busStopRepository;
 
-    public BusStopServiceImpl(BusStopRepository busStopRepository,BusRouteRepository busRouteRepository) {
-        this.busStopRepository = busStopRepository;
-        this.busRouteRepository = busRouteRepository;
-    }
+@NonNull
+    final
+    private BusRouteRepository busRouteRepository;
 
     @Override
     public List<BusStop> findAll() {
@@ -36,31 +34,40 @@ public class BusStopServiceImpl implements BusStopService{
     }
 
     @Override
-    public BusStop findByLocation(Double Longitude, Double Latitude) {
-     return this.busStopRepository.findBusStopsByLatitudeEqualsAndLongitude(Longitude,Latitude);
-    }
-
-    @Override
     public BusStop findByName(String name) {
         return this.busStopRepository.findByName(name);
     }
-
-
     @Override
-    public BusStop createNewBusStop(BusStop busStop) throws NoRouteFoundException {
-       Set<BusRoute> busRoute =  busStop.getBusRouteSet();
-       Set<BusRoute> busRoutesFromdb = new HashSet<>();
-       for(BusRoute each: busRoute){
-           BusRoute busRoute1 = this.busRouteRepository.findById(each.getId()).orElse(this.busRouteRepository.save(each));
-
-           busRoutesFromdb.add(busRoute1);
-       }
-       busStop.setBusRouteSet(busRoutesFromdb);
-        BusStop bs = this.busStopRepository.save(busStop);
-        return bs;
+    public BusStop createNewBusStop(BusStop busStop) throws BusStopAlreadyExistsException {
+        checkIfAlreadyExiststhenThrowBusStopAlreadyFoundException(busStop);
+        associateBusStopWithBusRoutesSavesBusRoutes(busStop);
+        BusStop  busStop1= busStopRepository.save(busStop);
+        return busStop1;
     }
 
-    @Override
+    private void associateBusStopWithBusRoutesSavesBusRoutes(BusStop busStop) {
+        List<BusRoute> allBusRoutes = this.busRouteRepository.findAll();
+        for (BusRoute busRoute: allBusRoutes) {
+            for (LocationKey l: busRoute.getLocations()) {
+                if(busStop.getLocation().equals(l)){
+                    busRoute.getBusStopSet().add(busStop);
+                    this.busRouteRepository.save(busRoute);
+                    break;
+                }
+
+            }
+
+        }
+    }
+
+    private void checkIfAlreadyExiststhenThrowBusStopAlreadyFoundException(BusStop busStop) throws BusStopAlreadyExistsException {
+        BusStop busStop1 = this.busStopRepository.findBusStopByLocation(busStop.getLocation());
+        if(busStop1 != null){
+            throw new BusStopAlreadyExistsException();
+        }
+    }
+
+
     public BusStop updateBusStop(Long id, BusStop busStop) throws NoBusStopFoundException {
         BusStop bs = this.busStopRepository.findById(id).orElseThrow(()->new NoBusStopFoundException());
         BusStop updatedBusStop = this.getBusStopForUpdate(bs,busStop);
@@ -74,17 +81,8 @@ public class BusStopServiceImpl implements BusStopService{
         return bs;
     }
 
-
-    @Override
-    public Integer getFare(BusStop bs1, BusStop bs2, Boolean isDiscounted, BusRoute busRoute) throws NoRouteFoundException {
-        if(isDiscounted)
-            return Utils.fareCalculationDiscounted(bs1,bs2,busRoute);
-        return Utils.fareCalculationForNormal(bs1,bs2,busRoute);
-    }
-
     private BusStop getBusStopForUpdate(BusStop busStopOriginal, BusStop busStopUpdated){
         busStopUpdated.setName(CheckNullElse.getName(busStopOriginal,busStopUpdated));
-        busStopUpdated.setBusStopLocation(CheckNullElse.getBusLocation(busStopOriginal,busStopUpdated));
         return busStopUpdated;
     }
 

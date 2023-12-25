@@ -1,28 +1,37 @@
 package com.subasadhikari.kathmanduvalleybusfarecalculationsystem.FareCalculation;
-import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity.BusRoute;
+import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busRoute.entity.BusRoute;
 import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity.BusStop;
-import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity.Location;
-import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity.Valleystreet;
-import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.exceptions.NoRouteFoundException;
+import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.location.Embeddable.LocationKey;
+import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busRoute.exceptions.NoRouteFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 
+@Component
 public class Utils {
-    @Value("$app.discountFactor")
-    private  static Double discountFactor;
-    public  static Double calculateDistance(BusStop bs1, BusStop bs2, BusRoute busRoute) throws NoRouteFoundException {
-        Location bs1Location = bs1.getBusStopLocation();
-        Location bs2Location = bs2.getBusStopLocation();
-        Set<BusStop> busStopSet = busRoute.getBusStopSet();
-        List<Location> busRouteLocations = busRoute.getLocations();
-        List<Location> actualTravelledLocation = new ArrayList<>();
+    private  final Environment env;
+    private static Double discountFactor ;
+
+    public Utils(Environment env) {
+        this.env = env;
+        discountFactor = Double.valueOf(env.getProperty("discountFactor"));
+        if(discountFactor==null) discountFactor =0.2;
+    }
+
+    public   Double calculateDistance(BusStop bs1, BusStop bs2, BusRoute busRoute) throws NoRouteFoundException {
+        LocationKey bs1Location = bs1.getLocation();
+        LocationKey bs2Location = bs2.getLocation();
+
+
+        List<LocationKey> busRouteLocations = busRoute.getLocations();
+
         Integer firstIndex = -1;
         Integer lastIndex = -1;
-        for (Location l: busRouteLocations) {
+        for (LocationKey l: busRouteLocations) {
             if(l.equals(bs1Location)){
                 firstIndex = busRouteLocations.indexOf(l);
 
@@ -45,8 +54,8 @@ public class Utils {
         }
         Double distance  = 0.0;
         for(int i = firstIndex;i<lastIndex;i++){
-            Location l1 = busRouteLocations.get(i);
-            Location l2  = busRouteLocations.get(i+1);
+            LocationKey l1 = busRouteLocations.get(i);
+            LocationKey l2  = busRouteLocations.get(i+1);
             Double lat1 = l1.getLatitude();
             Double lon1 = l1.getLongitude();
             Double lat2 = l2.getLatitude();
@@ -60,7 +69,7 @@ public class Utils {
 
 
     }
-    public static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+    public  double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
         // Radius of the Earth in kilometers
         double earthRadius = 6371;
 
@@ -79,13 +88,15 @@ public class Utils {
 
         return distance;
     }
-    public static Integer fareCalculationForNormal(BusStop bs1, BusStop bs2,BusRoute busRoute) throws NoRouteFoundException {
-        Double distance =  Utils.calculateDistance(bs1,bs2,busRoute);
+    public Integer fareCalculationForNormal(BusStop bs1, BusStop bs2,BusRoute busRoute) throws NoRouteFoundException {
+        Double distance =  this.calculateDistance(bs1,bs2,busRoute);
         return (int) (15+distance);
 
     }
-    public static Integer fareCalculationDiscounted(BusStop bs1, BusStop bs2,BusRoute busRoute) throws NoRouteFoundException {
-        Double distance =  Utils.calculateDistance(bs1,bs2,busRoute);
-        return (int)(15+discountFactor*distance);
+    public  Integer fareCalculationDiscounted(BusStop bs1, BusStop bs2,BusRoute busRoute) throws NoRouteFoundException {
+        Double distance =  this.calculateDistance(bs1,bs2,busRoute);
+        return (int)((1-discountFactor)*(15+distance)<15?15:(1-discountFactor)*(15+distance));
     }
+
+
 }
