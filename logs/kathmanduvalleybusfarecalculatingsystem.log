@@ -1,0 +1,25 @@
+2023-12-26T12:47:13.448+05:45  INFO 21923 --- [main] alleyBusFareCalculationSystemApplication : Starting KathmanduValleyBusFareCalculationSystemApplication using Java 17.0.9 with PID 21923 (/home/subas/IdeaProjects/KathmanduValleyBusFareCalculationSystem/target/classes started by subas in /home/subas/IdeaProjects/KathmanduValleyBusFareCalculationSystem)
+2023-12-26T12:47:13.457+05:45  INFO 21923 --- [main] alleyBusFareCalculationSystemApplication : No active profile set, falling back to 1 default profile: "default"
+2023-12-26T12:47:15.617+05:45  INFO 21923 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-12-26T12:47:15.781+05:45  INFO 21923 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 144 ms. Found 2 JPA repository interfaces.
+2023-12-26T12:47:17.042+05:45  INFO 21923 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2023-12-26T12:47:17.062+05:45  INFO 21923 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-12-26T12:47:17.063+05:45  INFO 21923 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2023-12-26T12:47:17.199+05:45  INFO 21923 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-12-26T12:47:17.200+05:45  INFO 21923 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3601 ms
+2023-12-26T12:47:17.629+05:45  INFO 21923 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-12-26T12:47:17.768+05:45  INFO 21923 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
+2023-12-26T12:47:17.863+05:45  INFO 21923 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2023-12-26T12:47:18.453+05:45  INFO 21923 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-12-26T12:47:18.520+05:45  INFO 21923 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-12-26T12:47:19.309+05:45  INFO 21923 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@699d96bc
+2023-12-26T12:47:19.313+05:45  INFO 21923 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-12-26T12:47:21.790+05:45  INFO 21923 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2023-12-26T12:47:21.998+05:45  INFO 21923 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-12-26T12:47:23.124+05:45  WARN 21923 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-12-26T12:47:25.213+05:45  INFO 21923 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2023-12-26T12:47:25.242+05:45  INFO 21923 --- [main] alleyBusFareCalculationSystemApplication : Started KathmanduValleyBusFareCalculationSystemApplication in 13.051 seconds (process running for 14.661)
+2023-12-26T12:49:23.746+05:45  INFO 21923 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-12-26T12:49:23.747+05:45  INFO 21923 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-12-26T12:49:23.753+05:45  INFO 21923 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2023-12-26T12:49:24.253+05:45 ERROR 21923 --- [http-nio-8080-exec-2] c.s.k.g.GlobalExceptionHandler           : Bus Stop Not Found
