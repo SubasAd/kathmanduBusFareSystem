@@ -52,7 +52,7 @@ public class BusStopController {
     }
     @CrossOrigin
     @GetMapping("/name/{busStopName}")
-    ResponseEntity<BusStop> findByName(@PathVariable String busStopName ){
+    ResponseEntity<BusStop> findByName(@PathVariable String busStopName ) throws NoBusStopFoundException {
         return ResponseEntity.ok(this.busStopService.findByName(busStopName));
     }
 

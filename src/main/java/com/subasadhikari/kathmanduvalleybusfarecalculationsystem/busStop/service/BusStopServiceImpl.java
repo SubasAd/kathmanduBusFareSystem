@@ -34,9 +34,11 @@ public class BusStopServiceImpl implements BusStopService{
     }
 
     @Override
-    public BusStop findByName(String name) {
-        return this.busStopRepository.findByName(name);
+    public BusStop findByName(String name) throws NoBusStopFoundException {
+        return this.busStopRepository.findByName(name).orElseThrow(()->new NoBusStopFoundException());
+
     }
+
     @Override
     public BusStop createNewBusStop(BusStop busStop) throws BusStopAlreadyExistsException {
         checkIfAlreadyExiststhenThrowBusStopAlreadyFoundException(busStop);

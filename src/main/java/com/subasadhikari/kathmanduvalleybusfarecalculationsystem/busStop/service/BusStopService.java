@@ -13,8 +13,7 @@ public interface BusStopService {
 
     List<BusStop> findAll();
     BusStop findById(Long Id) throws NoBusStopFoundException;
-    BusStop findByName(String name);
-
+    BusStop findByName(String name) throws NoBusStopFoundException;
 
     BusStop createNewBusStop(BusStop busStop) throws NoRouteFoundException, BusStopAlreadyExistsException;
 

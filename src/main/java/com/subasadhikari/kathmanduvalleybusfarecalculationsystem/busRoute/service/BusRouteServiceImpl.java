@@ -48,13 +48,15 @@ public class BusRouteServiceImpl implements BusRouteService {
 
     @Override
     public BusRoute createNewBusRoute(BusRoute busRoute) throws NoBusStopFoundException {
+        associateBusRouteWithBusStop(busRoute);
+        return this.busRouteRepository.save(busRoute);
+    }
+
+    private void associateBusRouteWithBusStop(BusRoute busRoute) {
         List<LocationKey> locations = busRoute.getLocations();
         for(LocationKey location: locations){
             busRoute.getBusStopSet().add(this.busStopRepository.findBusStopByLocation(location));
         }
-
-       BusRoute busRoute1 =  this.busRouteRepository.save(busRoute);
-       return busRoute1;
     }
 
     @Override
@@ -63,12 +65,10 @@ public class BusRouteServiceImpl implements BusRouteService {
         busRoute.setId(id);
         busRoute = this.getBusRouteForUpdate(busRoute1,busRoute);
        return this.busRouteRepository.save(busRoute);
-
     }
 
     private BusRoute getBusRouteThrowsBusRouteNotFoundException(Long id) throws NoRouteFoundException {
-        BusRoute busRoute1 = this.busRouteRepository.findById(id).orElseThrow(()->new NoRouteFoundException());
-        return busRoute1;
+        return this.busRouteRepository.findById(id).orElseThrow(()->new NoRouteFoundException());
     }
 
     @Override
@@ -78,7 +78,7 @@ public class BusRouteServiceImpl implements BusRouteService {
         return busRoute;
 
     }
-    public BusRoute getBusRouteForUpdate(BusRoute originalBusRoute, BusRoute updatedBusRoute){
+    private BusRoute getBusRouteForUpdate(BusRoute originalBusRoute, BusRoute updatedBusRoute){
         updatedBusRoute.setName(CheckNullElse.getName(originalBusRoute, updatedBusRoute));
         updatedBusRoute.setBusStopSet(CheckNullElse.getBusStops(originalBusRoute, updatedBusRoute));
         return updatedBusRoute;

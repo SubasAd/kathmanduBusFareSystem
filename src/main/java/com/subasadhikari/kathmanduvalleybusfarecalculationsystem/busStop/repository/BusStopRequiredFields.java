@@ -3,9 +3,11 @@ package com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.reposi
 import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.busStop.entity.BusStop;
 import com.subasadhikari.kathmanduvalleybusfarecalculationsystem.location.Embeddable.LocationKey;
 
+import java.util.Optional;
+
 public interface BusStopRequiredFields {
 
-    BusStop findByName(String Name);
+    Optional<BusStop> findByName(String Name);
     BusStop findBusStopByLocation(LocationKey locationKey);
 
 }
